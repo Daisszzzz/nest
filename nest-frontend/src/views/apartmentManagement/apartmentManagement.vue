@@ -164,9 +164,9 @@ const columns: ColumnProps[] = [
     label: 'Occupancy Status',
     render: ({ row }: { row: ApartmentInterface }) => {
       return row.freeRoomCount === 0 ? (
-        <el-tag type="info">已满房</el-tag>
+        <el-tag type="info">Full</el-tag>
       ) : (
-        <el-tag type="success">可入住</el-tag>
+        <el-tag type="success">Available</el-tag>
       )
     },
   },
@@ -309,13 +309,13 @@ const addHandle = () => {
 }
 // Delete handler
 const deleteHandle = async (row: ApartmentInterface) => {
-  
+
   await useHandleData(deleteApartmentById, row.id, `删除${row.name}`)
-  
+
   proTable.value?.getTableList()
 }
 onMounted(() => {
-  
+
   getProvinceListHandle()
 })
 </script>
