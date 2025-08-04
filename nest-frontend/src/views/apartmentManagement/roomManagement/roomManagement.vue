@@ -10,16 +10,16 @@
     >
       <template #tableHeader>
         <el-button type="primary" icon="Plus" @click="addHandle">
-          新增房间
+          Add Room
         </el-button>
       </template>
-      <!-- 表格操作 -->
+      <!-- Table Operations -->
       <template #operation="scope">
         <el-button type="success" icon="Edit" @click="editHandle(scope.row)">
-          修改
+          Edit
         </el-button>
         <el-button type="danger" icon="Delete" @click="deleteHandle(scope.row)">
-          删除
+          Delete
         </el-button>
       </template>
     </ProTable>
@@ -55,28 +55,28 @@ import {
 
 const router = useRouter()
 
-// *获取 ProTable 元素，调用其获取刷新数据方法
+// *Get ProTable element, call its refresh method
 const proTable = ref<InstanceType<typeof ProTable>>()
-// 地区数据
+// Area data
 const areaInfo = reactive({
-  // 省份数据
+  // Province data
   provinceList: [] as RegionInterface[],
   provinceId: '',
-  // 市区数据
+  // City data
   cityList: [] as RegionInterface[],
   cityId: '',
-  // 区县数据
+  // District data
   districtList: [] as RegionInterface[],
   districtId: '',
-  // 公寓数据
+  // Apartment data
   apartmentList: [] as ApartmentInterface[],
   apartmentId: '',
 })
-// *表格配置项
+// *Table columns config
 const columns: ColumnProps[] = [
   {
     prop: 'provinceId',
-    label: '省份',
+    label: 'Province',
     isShow: false,
     fieldNames: { label: 'name', value: 'id' },
     search: {
@@ -85,7 +85,7 @@ const columns: ColumnProps[] = [
         return (
           <el-select
             v-model={areaInfo.provinceId}
-            placeholder="请选择省份"
+            placeholder="Select Province"
             clearable
             key="provinceId"
             onChange={provinceChangeCallback}
@@ -105,7 +105,7 @@ const columns: ColumnProps[] = [
   },
   {
     prop: 'cityId',
-    label: '城市',
+    label: 'City',
     isShow: false,
     fieldNames: { label: 'name', value: 'id' },
     search: {
@@ -115,7 +115,7 @@ const columns: ColumnProps[] = [
         return (
           <el-select
             v-model={areaInfo.cityId}
-            placeholder="请选择城市"
+            placeholder="Select City"
             clearable
             key="cityId"
             onChange={cityChangeCallback}
@@ -135,7 +135,7 @@ const columns: ColumnProps[] = [
   },
   {
     prop: 'districtId',
-    label: '区域',
+    label: 'District',
     isShow: false,
     fieldNames: { label: 'name', value: 'id' },
     search: {
@@ -145,7 +145,7 @@ const columns: ColumnProps[] = [
         return (
           <el-select
             v-model={areaInfo.districtId}
-            placeholder="请选择区域"
+            placeholder="Select District"
             clearable
             onChange={districtChangeCallback}
             onClear={districtClearCallback}
@@ -164,7 +164,7 @@ const columns: ColumnProps[] = [
   },
   {
     prop: 'apartmentId',
-    label: '公寓',
+    label: 'Apartment',
     isShow: false,
     fieldNames: { label: 'name', value: 'id' },
     search: {
@@ -174,7 +174,7 @@ const columns: ColumnProps[] = [
         return (
           <el-select
             v-model={areaInfo.apartmentId}
-            placeholder="请选择公寓"
+            placeholder="Select Apartment"
             clearable
             onChange={apartmentChangeCallback}
             onClear={apartmentClearCallback}
@@ -191,15 +191,15 @@ const columns: ColumnProps[] = [
       },
     },
   },
-  { prop: 'roomNumber', label: '房间号' },
-  { prop: 'rent', label: '租金（元/月）' },
-  { prop: 'apartmentInfo.provinceName', label: '所处省份' },
-  { prop: 'apartmentInfo.cityName', label: '所处城市' },
-  { prop: 'apartmentInfo.districtName', label: '所处区域' },
-  { prop: 'apartmentInfo.name', label: '所处公寓' },
+  { prop: 'roomNumber', label: 'Room Number' },
+  { prop: 'rent', label: 'Rent (Yuan/Month)' },
+  { prop: 'apartmentInfo.provinceName', label: 'Province' },
+  { prop: 'apartmentInfo.cityName', label: 'City' },
+  { prop: 'apartmentInfo.districtName', label: 'District' },
+  { prop: 'apartmentInfo.name', label: 'Apartment' },
   {
     prop: 'isCheckIn',
-    label: '入住状态',
+    label: 'Check-in Status',
     render: ({ row }: { row: RoomInterface }) => {
       return row.isCheckIn === RoomCheckInStatus.NOT_CHECK_IN ? (
         <el-tag type="info">
@@ -214,7 +214,7 @@ const columns: ColumnProps[] = [
   },
   {
     prop: 'isRelease',
-    label: '发布状态',
+    label: 'Release Status',
     render: ({ row }: { row: RoomInterface }) => {
       return (
         <el-switch
@@ -228,14 +228,14 @@ const columns: ColumnProps[] = [
       )
     },
   },
-  { prop: 'operation', label: '操作', fixed: 'right', width: 230 },
+  { prop: 'operation', label: 'Operation', fixed: 'right', width: 230 },
 ]
 
-// *查询参数
+// *Search parameters
 const initParam = reactive({})
 
-//#region <省市区查询相关>
-// 获取省份
+//#region <Province/City/District Query>
+// Get provinces
 async function getProvinceListHandle() {
   try {
     const { data } = await getProvinceList()
@@ -245,7 +245,7 @@ async function getProvinceListHandle() {
     console.log(error)
   }
 }
-// 获取城市
+// Get cities
 async function getCityListHandle(provinceId: number) {
   try {
     const { data } = await getCityList(provinceId)
@@ -255,7 +255,7 @@ async function getCityListHandle(provinceId: number) {
     console.log(error)
   }
 }
-// 获取区域
+// Get districts
 async function getDistrictListHandle(cityId: number) {
   try {
     const { data } = await getDistrictList(cityId)
@@ -265,7 +265,7 @@ async function getDistrictListHandle(cityId: number) {
     console.log(error)
   }
 }
-// 获取公寓
+// Get apartments
 async function getApartmentListHandle(districtId: number) {
   try {
     const { data } = await getApartmentListByDistrictId(districtId)
@@ -275,28 +275,28 @@ async function getApartmentListHandle(districtId: number) {
     console.log(error)
   }
 }
-// 重置市数据
+// Reset city data
 function resetCity() {
   areaInfo.cityId = ''
   areaInfo.cityList = []
   proTable.value?.enumMap.set('cityId', [])
   proTable.value!.searchParam.cityId = ''
 }
-// 重置区数据
+// Reset district data
 function resetDistrict() {
   areaInfo.districtId = ''
   areaInfo.districtList = []
   proTable.value?.enumMap.set('districtId', [])
   proTable.value!.searchParam.districtId = ''
 }
-// 重置公寓数据
+// Reset apartment data
 function resetApartment() {
   areaInfo.apartmentId = ''
   areaInfo.apartmentList = []
   proTable.value?.enumMap.set('apartmentId', [])
   proTable.value!.searchParam.apartmentId = ''
 }
-// 省份改变回调
+// Province change callback
 const provinceChangeCallback = async () => {
   let provinceId = proTable.value!.searchParam.provinceId
   if (provinceId) {
@@ -306,7 +306,7 @@ const provinceChangeCallback = async () => {
     await getCityListHandle(provinceId)
   }
 }
-// 省份清除回调
+// Province clear callback
 const provinceClearCallback = () => {
   areaInfo.provinceId = ''
   proTable.value!.searchParam.provinceId = ''
@@ -314,7 +314,7 @@ const provinceClearCallback = () => {
   resetDistrict()
   resetApartment()
 }
-// 城市改变回调
+// City change callback
 const cityChangeCallback = async () => {
   let cityId = proTable.value!.searchParam.cityId
   if (cityId) {
@@ -323,15 +323,15 @@ const cityChangeCallback = async () => {
     await getDistrictListHandle(cityId)
   }
 }
-// 城市清除回调
+// City clear callback
 const cityClearCallback = () => {
-  console.log('清空城市')
+  console.log('Clear city')
   areaInfo.cityId = ''
   proTable.value!.searchParam.cityId = ''
   resetDistrict()
   resetApartment()
 }
-// 区域改变回调
+// District change callback
 const districtChangeCallback = async () => {
   let districtId = proTable.value!.searchParam.districtId
   if (districtId) {
@@ -339,33 +339,33 @@ const districtChangeCallback = async () => {
     await getApartmentListHandle(districtId)
   }
 }
-// 区域清除回调
+// District clear callback
 const districtClearCallback = () => {
-  console.log('清空区域')
+  console.log('Clear district')
   areaInfo.districtId = ''
   proTable.value!.searchParam.districtId = ''
   resetApartment()
 }
-// 公寓改变回调
+// Apartment change callback
 const apartmentChangeCallback = async () => {
-  console.log('公寓改变')
+  console.log('Apartment changed')
 }
-// 公寓清除回调
+// Apartment clear callback
 const apartmentClearCallback = () => {
-  console.log('清空公寓')
+  console.log('Clear apartment')
   areaInfo.apartmentId = ''
   proTable.value!.searchParam.apartmentId = ''
 }
 //#endregion
 
-// 处理返回的数据格式
+// Handle returned data format
 const dataCallback = (data: any) => {
   return {
     list: data?.records,
     total: data?.total,
   }
 }
-// 查看
+// Edit
 const editHandle = (row: RoomInterface) => {
   console.log(row)
   router.push({
@@ -375,13 +375,13 @@ const editHandle = (row: RoomInterface) => {
     },
   })
 }
-// 新增
+// Add
 const addHandle = () => {
   router.push({
     path: '/apartmentManagement/roomManagement/addOrEditRoom',
   })
 }
-// 通过，不通过
+// Delete
 const deleteHandle = async (row: RoomInterface) => {
   const apartmentName = row.apartmentInfo?.name || 'unknown apartment'
   await useHandleData(
@@ -392,7 +392,7 @@ const deleteHandle = async (row: RoomInterface) => {
   proTable.value?.getTableList()
 }
 onMounted(() => {
-  // 获取省份
+  // Get provinces
   getProvinceListHandle()
 })
 </script>
