@@ -1,0 +1,4 @@
+
+// .eslintignore config, ignoring specific files and directories
+dist
+node_modules
