@@ -13,9 +13,9 @@ export const DEFAULT_PRIMARY = '#409EFF'
 export const ROUTER_WHITE_LIST: string[] = ['/404']
 
 // * Amap (Gaode) Map Key
-export const AMAP_MAP_KEY = '5e8245ac445d7cd6d98b178ed42b5700'
+export const AMAP_MAP_KEY = 'XXX'
 
-export const AMAP_MAP_SECRET_KEY = '2f047c7b569d899dbd1ab8ccd11c22ed'
+export const AMAP_MAP_SECRET_KEY = 'XXX'
 
 // Amap (Gaode) Map Service Security Key
 export const AMAP_MAP_SERVICE_HOST = 'http://www.gitlbo.top:8181/_AMapService'
@@ -23,5 +23,5 @@ export const AMAP_MAP_SERVICE_HOST = 'http://www.gitlbo.top:8181/_AMapService'
 // * Baidu Map Key
 export const BAIDU_MAP_KEY = ''
 
-// Google Maps Key
-export const GOOGLE_MAP_KEY = 'AIzaSyDw4TWTpoLUzygyg_5LJUC8V7JjgIxKOV0'
+// Google Maps Key USE YOUR OWN KEY!!!
+export const GOOGLE_MAP_KEY = 'XXX'
