@@ -169,7 +169,7 @@
     </el-form>
     <div class="flex-center m-t-20">
       <el-button style="width: 150px" type="info" @click="router.back()">
-        取消
+        Cancel
       </el-button>
       <el-button style="width: 150px" type="primary" @click="submitHandle">
         {{ formData.id ? 'Save' : 'Create' }}
