@@ -8,7 +8,7 @@
     :reset="reset"
   />
   <div class="card table" ref="tableCard">
-    <!-- 表格头部 操作按钮 -->
+    <!-- Table header operation buttons -->
     <div class="table-header">
       <div class="header-left">
         <slot
@@ -19,7 +19,7 @@
         ></slot>
       </div>
       <div class="header-right" v-if="toolButton">
-        <el-tooltip content="刷新表格">
+        <el-tooltip content="Refresh Table">
           <el-icon size="18" @click="getTableList">
             <Refresh />
           </el-icon>
@@ -38,14 +38,14 @@
           />
           <SvgIcon size="18" name="exit-full" v-else @click="toggle" />
         </el-tooltip>
-        <el-tooltip content="列设置">
+        <el-tooltip content="Column Settings">
           <el-icon size="18" v-if="columns.length" @click="openColSetting">
             <Setting />
           </el-icon>
         </el-tooltip>
       </div>
     </div>
-    <!-- 表格主体 -->
+    <!-- Table body -->
     <el-table
       ref="tableRef"
       v-bind="$attrs"
@@ -67,7 +67,7 @@
           :reserve-selection="item.type == 'selection'"
           v-if="item.type == 'selection' || item.type == 'index'"
         ></el-table-column>
-        <!-- expend -->
+        <!-- expand -->
         <el-table-column
           v-bind="item"
           :align="item.align ?? 'center'"
@@ -92,7 +92,7 @@
           </template>
         </TableColumn>
       </template>
-      <!-- 插入表格最后一行之后的插槽 -->
+      <!-- Slot after the last row of the table -->
       <template #append>
         <slot name="append"></slot>
       </template>
@@ -106,7 +106,7 @@
         </div>
       </template>
     </el-table>
-    <!-- 分页组件 -->
+    <!-- Pagination component -->
     <slot name="pagination">
       <Pagination
         v-if="pagination"
@@ -131,19 +131,19 @@ import TableColumn from './components/TableColumn.vue'
 import Pagination from './components/Pagination.vue'
 import ColSetting from './components/ColSetting.vue'
 /**
- * @description: props类型定义
- * @param columns       - 列配置项
- * @param requestApi    - 请求表格数据的api ==> 必传
- * @param dataCallback  - 返回数据的回调函数，可以对数据进行处理 ==> 非必传
- * @param title         - 表格标题，目前只在打印的时候用到 ==> 非必传
- * @param pagination    - 是否需要分页组件 ==> 非必传（默认为true）
- * @param initParam     - 初始化请求参数 ==> 非必传（默认为{}）
- * @param border        - 是否带有纵向边框 ==> 非必传（默认为true）
- * @param stripe        - 是否带有斑马纹 ==> 非必传（默认为false）
- * @param toolButton    - 是否显示表格功能按钮 ==> 非必传（默认为true）
- * @param rowKey?: string; // 行数据的 Key，用来优化 Table 的渲染，当表格数据多选时，所指定的 id ==> 非必传（默认为 id）
- * @param searchCol     - 表格搜索项 每列占比配置 ==> 非必传 { xs: 1, sm: 2, md: 2, lg: 3, xl: 4 }
- * @param resetCallback      - 点击重置时候所额外执行的回调函数 ==> 非必传（默认为()=>{}）
+ * @description: Props type definition
+ * @param columns       - Column configuration
+ * @param requestApi    - API for requesting table data ==> required
+ * @param dataCallback  - Callback function for returned data, can process data ==> optional
+ * @param title         - Table title, currently only used for printing ==> optional
+ * @param pagination    - Whether to use pagination component ==> optional (default: true)
+ * @param initParam     - Initial request parameters ==> optional (default: {})
+ * @param border        - Whether to show vertical borders ==> optional (default: true)
+ * @param stripe        - Whether to show zebra stripes ==> optional (default: false)
+ * @param toolButton    - Whether to show table tool buttons ==> optional (default: true)
+ * @param rowKey?: string; // Row data key, used to optimize Table rendering, especially for multi-select ==> optional (default: id)
+ * @param searchCol     - Search item column span config ==> optional { xs: 1, sm: 2, md: 2, lg: 3, xl: 4 }
+ * @param resetCallback      - Callback executed when reset is clicked ==> optional (default: ()=>{})
  */
 interface ProTableProps extends Partial<Omit<TableProps<any>, 'data'>> {
   columns: ColumnProps[]
@@ -160,7 +160,7 @@ interface ProTableProps extends Partial<Omit<TableProps<any>, 'data'>> {
   resetCallback?: () => void
 }
 
-// 🌟组件props的ts定义必须在组件中声明
+// 🌟Component props TS definition must be declared in the component
 const props = withDefaults(defineProps<ProTableProps>(), {
   columns: () => [],
   pagination: true,
@@ -172,19 +172,19 @@ const props = withDefaults(defineProps<ProTableProps>(), {
   searchCol: () => ({ xs: 1, sm: 2, md: 2, lg: 3, xl: 4 }),
   resetCallback: () => ({}),
 })
-// --------------------表格-----------------------
+// --------------------Table-----------------------
 const tableCard = ref()
 
-// 表格 DOM 元素
+// Table DOM element
 const tableRef = ref<InstanceType<typeof ElTable>>()
 
-// 表格全屏
+// Table fullscreen
 const { isFullscreen, toggle } = useFullscreen(tableCard)
 
-// 接收 columns 并设置为响应式
+// Receive columns and set as reactive
 const tableColumns = ref<ColumnProps[]>(props.columns)
 
-// 表格操作 Hooks
+// Table operation hooks
 const {
   tableData,
   pageable,
@@ -205,9 +205,9 @@ const reset = () => {
   resetTable()
   props.resetCallback()
 }
-// 监听页面 initParam 改化，重新获取表格数据
+// Watch for changes in initParam, re-fetch table data
 watch(() => props.initParam, getTableList, { deep: true })
-// 监听页面 columns中的某项enum是否改变，重新设置enum数据 目前只针对select的数据
+// Watch for changes in enum in columns, reset enum data (mainly for select)
 watch(
   () => props.columns,
   () => {
@@ -218,29 +218,29 @@ watch(
         (item.search.el === 'select' || item.search.el === 'tree-select') &&
         item.enum
       ) {
-        // 重设数据
+        // Reset data
         setEnumMap(item)
-        // 重重对应搜索数据
+        // Reset corresponding search data
         item.prop && (searchParam.value[item.prop] = '')
       }
     })
   },
   { deep: true },
 )
-//* --------------------表格多选-----------------------
+//* --------------------Table selection-----------------------
 
-// 表格多选 Hooks
+// Table selection hooks
 const { selectionChange, selectedList, selectedListIds, isSelected } =
   useSelection(props.rowKey)
 
-// 清空选中数据列表
+// Clear selected data list
 const clearSelection = () => tableRef.value!.clearSelection()
 
-// --------------------搜索-----------------------
-// 是否显示搜索模块
+// --------------------Search-----------------------
+// Whether to show search module
 const isShowSearch = ref(true)
 
-// 定义 enumMap 存储 enum 值（避免异步请求无法格式化单元格内容 || 无法填充搜索下拉选择）
+// Define enumMap to store enum values (avoid async request issues with cell formatting or search dropdowns)
 const enumMap = ref(new Map<string, { [key: string]: any }[]>())
 provide('enumMap', enumMap)
 
@@ -252,7 +252,7 @@ const setEnumMap = async (col: ColumnProps) => {
   enumMap.value.set(col.prop!, data)
 }
 
-// 扁平化 columns
+// Flatten columns
 const flatColumnsFunc = (
   columns: ColumnProps[],
   flatArr: ColumnProps[] = [],
@@ -261,7 +261,7 @@ const flatColumnsFunc = (
     if (col._children?.length) flatArr.push(...flatColumnsFunc(col._children))
     flatArr.push(col)
 
-    // 给每一项 column 添加 isShow && isFilterEnum 默认属性
+    // Add isShow && isFilterEnum default properties to each column
     col.isShow = col.isShow ?? true
     col.isFilterEnum = col.isFilterEnum ?? true
 
@@ -272,10 +272,10 @@ const flatColumnsFunc = (
 const flatColumns = ref<ColumnProps[]>()
 flatColumns.value = flatColumnsFunc(tableColumns.value)
 
-// 过滤需要搜索的配置项
+// Filter columns that need search
 const searchColumns = flatColumns.value.filter((item) => item.search?.el)
 
-// 列设置 ==> 过滤掉不需要设置显隐的列
+// Column settings ==> filter out columns that do not need show/hide settings
 const colRef = ref()
 const colSetting = tableColumns.value!.filter((item) => {
   return (

@@ -46,15 +46,15 @@
           <el-dropdown-menu>
             <el-dropdown-item @click="closeCurrentTab">
               <el-icon :size="14"><FolderRemove /></el-icon>
-              关闭当前
+              Close Current
             </el-dropdown-item>
             <el-dropdown-item @click="closeOtherTab">
               <el-icon :size="14"><Close /></el-icon>
-              关闭其他
+              Close Others
             </el-dropdown-item>
             <el-dropdown-item @click="closeAllTab">
               <el-icon :size="14"><FolderDelete /></el-icon>
-              关闭所有
+              Close All
             </el-dropdown-item>
           </el-dropdown-menu>
         </template>

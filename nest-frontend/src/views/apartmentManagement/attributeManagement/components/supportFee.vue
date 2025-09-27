@@ -76,7 +76,7 @@
   </el-card>
 </template>
 <script setup lang="ts">
-import { onMounted, ref, type ComponentPublicInstance } from 'vue'
+import { onMounted, ref } from 'vue'
 import {
   FeeValueInfoInterface,
   FeeInfoInterface,
@@ -89,9 +89,9 @@ import {
 import SupportFeeDialog from '@/views/apartmentManagement/attributeManagement/components/supportFeeDialog.vue'
 import { ElMessage } from 'element-plus'
 import SupportFeeAddOrEditAttrDialog from '@/views/apartmentManagement/attributeManagement/components/supportFeeAddOrEditAttrDialog.vue'
-const supportFeeDialog = ref<ComponentPublicInstance>()
+const supportFeeDialog = ref<InstanceType<typeof SupportFeeDialog>>()
 const supportFeeAddOrEditFeeDialog =
-  ref<ComponentPublicInstance>()
+  ref<InstanceType<typeof SupportFeeAddOrEditAttrDialog>>()
 
 // Attribute types
 const attrTypeList = ref<FeeInfoInterface[]>([])
