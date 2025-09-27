@@ -237,7 +237,7 @@ const columns: ColumnProps[] = [
       }
     },
   },
-  { prop: 'operation', label: '操作', fixed: 'right', width: 150 },
+  { prop: 'operation', label: 'operation', fixed: 'right', width: 150 },
 ]
 
 const initParam = reactive({})

@@ -14,7 +14,7 @@ const router = createRouter({
 router.beforeEach(async (to, from, next) => {
   NProgress.start()
 
-   const userStore = useUserStore()
+/*    const userStore = useUserStore()
   // 1. If visiting login page, stay if token exists, otherwise reset route and go to login
   if (to.path === LOGIN_URL) {
     if (userStore.token) return next(from.fullPath)
@@ -28,7 +28,7 @@ router.beforeEach(async (to, from, next) => {
   if (!userStore.token) {
     return next({ path: LOGIN_URL, query: { redirect: to.fullPath } })
   } 
-
+ */
   // 4. If none of the above, allow directly
   return next()
 })
