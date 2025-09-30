@@ -52,14 +52,14 @@ export default defineComponent({
 
     // 退出登陆
     function logout() {
-      ElMessageBox.confirm('您确定要退出吗？', '提示', {
-        confirmButtonText: '确认',
-        cancelButtonText: '取消',
+      ElMessageBox.confirm('Are you sure you want to log out?', 'Select', {
+        confirmButtonText: 'confirm',
+        cancelButtonText: 'cancel',
         type: 'warning',
       }).then(async () => {
         await userStore.Logout()
         router.push({ path: LOGIN_URL, query: { redirect: route.fullPath } })
-        ElMessage.success('退出登录成功！')
+        ElMessage.success('Logout successfully!')
       })
     }
     return {

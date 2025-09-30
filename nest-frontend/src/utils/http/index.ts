@@ -1,8 +1,4 @@
-/*
- * @Author: 朽木白
- * @Date: 2023-02-06 11:02:58
- * @Description: axios请求封装
- */
+
 import axios from 'axios'
 import type {
   AxiosInstance,
@@ -19,12 +15,12 @@ import { RESEETSTORE } from '../reset'
 import router from '@/router'
 
 export const service: AxiosInstance = axios.create({
-  // 判断环境设置不同的baseURL
+  // Set different baseURL according to environment
   baseURL: import.meta.env.PROD ? import.meta.env.VITE_APP_BASE_URL : '/',
   timeout: ResultEnum.TIMEOUT as number,
 })
 /**
- * @description: 请求拦截器
+ * @description: Request interceptor
  * @returns {*}
  */
 service.interceptors.request.use(
@@ -42,13 +38,13 @@ service.interceptors.request.use(
   },
 )
 /**
- * @description: 响应拦截器
+ * @description: Response interceptor
  * @returns {*}
  */
 service.interceptors.response.use(
   (response: AxiosResponse) => {
     const { data } = response
-    // * 登陆失效
+    // * Login expired
     if (ResultEnum.EXPIRE.includes(data.code)) {
       RESEETSTORE()
       ElMessage.error(data.message || ResultEnum.ERRMESSAGE)
@@ -63,25 +59,25 @@ service.interceptors.response.use(
     return data
   },
   (error: AxiosError) => {
-    // 处理 HTTP 网络错误
+    // Handle HTTP network errors
     let message = ''
-    // HTTP 状态码
+    // HTTP status code
     const status = error.response?.status
     switch (status) {
       case 401:
-        message = 'token 失效，请重新登录'
+        message = 'Token expired, please login again'
         break
       case 403:
-        message = '拒绝访问'
+        message = 'Access denied'
         break
       case 404:
-        message = '请求地址错误'
+        message = 'Request address error'
         break
       case 500:
-        message = '服务器故障'
+        message = 'Server error'
         break
       default:
-        message = '网络连接故障'
+        message = 'Network connection error'
     }
 
     ElMessage.error(message)
@@ -90,7 +86,7 @@ service.interceptors.response.use(
 )
 
 /**
- * @description: 导出封装的请求方法
+ * @description: Export encapsulated request methods
  * @returns {*}
  */
 const http = {

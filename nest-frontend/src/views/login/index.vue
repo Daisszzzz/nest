@@ -5,7 +5,13 @@
         <div style="color: transparent">Left Area Placeholder</div>
       </el-col>
       <el-col :xs="24" :sm="24" :md="12" :lg="10" :xl="10">
-        <el-form class="login-form">
+        <el-form
+            ref="ruleFormRef"
+            :model="ruleForm"
+            status-icon
+            :rules="rules"
+            class="login-form"
+        >
           <div class="form-header">
             <div class="title">Hello!</div>
             <div class="title-tips">
@@ -14,11 +20,13 @@
           </div>
           <el-form-item>
             <el-input
+              v-model="ruleForm.username"
               placeholder="Please enter username"
             />
           </el-form-item>
           <el-form-item>
             <el-input
+              v-model="ruleForm.password"
               type="password"
               show-password
               placeholder="Please enter password"
@@ -28,6 +36,7 @@
             <el-row>
               <el-col :span="15">
                 <el-input
+                  v-model="ruleForm.captchaCode"
                   placeholder="Please enter captcha"
                 />
               </el-col>
@@ -36,7 +45,8 @@
                   fit="contain"
                   style="height: 100%; background: white"
                   class="pointer"
-                  :src="''"
+                  :src="captcha.image"
+                  @click="getCaptcha"
                 />
               </el-col>
             </el-row>
@@ -46,6 +56,8 @@
               class="login-btn"
               type="primary"
               size="large"
+              :loading="loading"
+              @click="submitForm(ruleFormRef)"
             >
               Login
             </el-button>

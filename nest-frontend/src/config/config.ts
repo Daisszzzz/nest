@@ -24,4 +24,4 @@ export const AMAP_MAP_SERVICE_HOST = 'http://www.gitlbo.top:8181/_AMapService'
 export const BAIDU_MAP_KEY = ''
 
 // Google Maps Key USE YOUR OWN KEY!!!
-export const GOOGLE_MAP_KEY = 'XXX'
+export const GOOGLE_MAP_KEY = 'AIzaSyDw4TWTpoLUzygyg_5LJUC8V7JjgIxKOV0'
