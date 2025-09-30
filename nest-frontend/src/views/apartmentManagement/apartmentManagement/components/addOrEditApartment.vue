@@ -40,7 +40,7 @@
           <el-form-item prop="cityId">
             <el-select
               v-model="formData.cityId"
-              placeholder="	Select City"
+              placeholder="Select City"
               clearable
               @change="cityChangeCallback"
               @clear="cityClearCallback"
@@ -56,7 +56,7 @@
           <el-form-item prop="districtId">
             <el-select
               v-model="formData.districtId"
-              placeholder="	Select District"
+              placeholder="Select District"
               clearable
               @change="districtChangeCallback"
               @clear="districtClearCallback"
@@ -77,7 +77,7 @@
           filterable
           remote
           clearable
-          placeholder="	Enter detailed address to search"
+          placeholder="Enter detailed address to search"
           :remote-method="remoteMethod"
           style="width: 100%"
           @change="addressDetailChangeCallback"
